@@ -11,3 +11,4 @@
 - Files ended up in app/app/ (nested folder). Fixed with Move-Item / Remove-Item.
 - An `if` indented 3 spaces swallowed the rest of the function, so valid users returned None (500 error). In Python, indentation defines blocks.
 - PowerShell's `>` saved requirements.txt as UTF-16, which Git treated as binary. Fixed with Out-File -Encoding ascii.
+- Pytest.ini was empty because it wasn’t saved, so pytest couldn’t find the app module. python -m pytest worked because it adds the current folder to Python’s search path.
