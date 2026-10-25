@@ -34,7 +34,7 @@ def get_user(username):
 
     conn = get_db()
     row = conn.execute(
-        f"SELECT id, username, email FROM users WHERE username = '{username,}'"
+        "SELECT id, username, email FROM users WHERE username = ?", (username,)
     ).fetchone()
     conn.close()
 
