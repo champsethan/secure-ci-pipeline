@@ -1,3 +1,4 @@
+import re
 import sqlite3
 from flask import Flask, jsonify
 
@@ -28,11 +29,12 @@ def init_db():
 
 @app.route("/users/<username>")
 def get_user(username):
-    # INTENTIONALLY VULNERABLE (demo only):
-    # no input validation, and user input is pasted straight into the SQL
+    if not re.fullmatch(r"[A-Za-z0-9_]+", username):
+        return jsonify({"error": "invalid username"}), 400
+
     conn = get_db()
     row = conn.execute(
-        f"SELECT id, username, email FROM users WHERE username = '{username}'"
+        "SELECT id, username, email FROM users WHERE username = ?", (username,)
     ).fetchone()
     conn.close()
 
